@@ -1,0 +1,33 @@
+{
+    "configen": {
+        "version": "4",
+        "sources": [
+            {
+                "id": "lib",
+                "path": "lib",
+                "r": true
+            },
+            {
+                "id": "test",
+                "path": "src/test/golang/unit",
+                "r": true
+            }
+        ],
+        "destinations": [
+            {
+                "id": "lib",
+                "path": "gen/gen4libcli",
+                "sources": [
+                    "lib"
+                ]
+            },
+            {
+                "id": "test",
+                "path": "gen/gen4libclitest",
+                "sources": [
+                    "test"
+                ]
+            }
+        ]
+    }
+}

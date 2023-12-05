@@ -1,8 +1,7 @@
 package lib
 
 import (
-	"bitwormhole.com/starter/cli"
-	"github.com/bitwormhole/starter/markup"
+	"github.com/starter-go/cli"
 )
 
 // CliContextHolder ...
@@ -12,7 +11,9 @@ type CliContextHolder interface {
 
 // CliContextHolderImpl ...
 type CliContextHolderImpl struct {
-	markup.Component `id:"cli.ContextHolder"`
+	// markup.Component `id:"cli.ContextHolder"`
+	//starter:component
+	_as func(CliContextHolder) //starter:as("#")
 
 	context *cli.Context
 }

@@ -1,15 +1,16 @@
 package lib
 
 import (
-	"bitwormhole.com/starter/cli"
-	"bitwormhole.com/starter/cli/handlers"
-
-	"github.com/bitwormhole/starter/markup"
+	"github.com/starter-go/cli"
+	"github.com/starter-go/cli/handlers"
 )
 
 // CliHandlersConfig ...
 type CliHandlersConfig struct {
-	markup.Component `class:"cli.HandlerRegistry"`
+	// markup.Component `class:"cli.HandlerRegistry"`
+	//starter:component
+	_as func(cli.HandlerRegistry) //starter:as(".")
+
 }
 
 func (inst *CliHandlersConfig) _Impl() cli.HandlerRegistry {

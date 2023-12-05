@@ -1,26 +1,27 @@
 package lib
 
 import (
-	"bitwormhole.com/starter/cli"
-	"github.com/bitwormhole/starter/application"
-	"github.com/bitwormhole/starter/markup"
+	"github.com/starter-go/application"
+	"github.com/starter-go/cli"
 )
 
 // TestPoint ...
 type TestPoint struct {
-	markup.Component `class:"life"`
+	// markup.Component `class:"life"`
+	//starter:component
+	_as func(application.Lifecycle) //starter:as(".")
 
-	Enabled bool       `inject:"${cli.module.test.enabled}"`
-	Client  cli.Client `inject:"#cli.Client"`
+	Enabled bool    //starter:inject("${cli.module.test.enabled}")
+	CLI     cli.CLI //starter:inject("#")
 }
 
-func (inst *TestPoint) _Impl() application.LifeRegistry {
+func (inst *TestPoint) _Impl() application.Lifecycle {
 	return inst
 }
 
-// GetLifeRegistration ...
-func (inst *TestPoint) GetLifeRegistration() *application.LifeRegistration {
-	return &application.LifeRegistration{
+// Life ...
+func (inst *TestPoint) Life() *application.Life {
+	return &application.Life{
 		OnStart: inst.doTest,
 	}
 }
@@ -30,5 +31,5 @@ func (inst *TestPoint) doTest() error {
 		return nil
 	}
 	cmd := "pwd"
-	return inst.Client.RunCCA(nil, cmd, nil)
+	return inst.CLI.GetClient().RunCCA(nil, cmd, nil)
 }

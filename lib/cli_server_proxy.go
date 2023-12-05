@@ -1,15 +1,16 @@
 package lib
 
 import (
-	"bitwormhole.com/starter/cli"
-	"github.com/bitwormhole/starter/markup"
+	"github.com/starter-go/cli"
 )
 
 // CliServerFacade ...
 type CliServerFacade struct {
-	markup.Component `id:"cli.Server"`
+	// markup.Component `id:"cli.Server"`
+	//starter:component
+	_as func(cli.Server) //starter:as("#")
 
-	ContextHolder CliContextHolder `inject:"#cli.ContextHolder"`
+	ContextHolder CliContextHolder //starter:inject("#")
 }
 
 func (inst *CliServerFacade) _Impl() cli.Server {
@@ -28,4 +29,14 @@ func (inst *CliServerFacade) FindHandler(name string) (*cli.HandlerRegistration,
 // ListNames ...
 func (inst *CliServerFacade) ListNames() []string {
 	return inst.getInner().ListNames()
+}
+
+// RegisterHandler 。。。
+func (inst *CliServerFacade) RegisterHandler(hr *cli.HandlerRegistration) error {
+	return inst.getInner().RegisterHandler(hr)
+}
+
+// RegisterHandlers 。。。
+func (inst *CliServerFacade) RegisterHandlers(hr cli.HandlerRegistry) error {
+	return inst.getInner().RegisterHandlers(hr)
 }

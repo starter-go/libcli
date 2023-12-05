@@ -1,14 +1,17 @@
-module bitwormhole.com/starter/libcli
+module github.com/starter-go/libcli
 
-go 1.18
+go 1.20
 
 require (
-	bitwormhole.com/starter/cli v0.0.1 // direct
-	github.com/bitwormhole/starter v0.1.5 // direct
+	github.com/starter-go/application v0.9.18 // direct
+	github.com/starter-go/cli v1.0.4
+	github.com/starter-go/starter v1.0.7 // direct
 )
 
 require (
-	bitwormhole.com/starter/afs v0.0.1 // indirect
-	bitwormhole.com/starter/base v0.0.1 // indirect
-	bitwormhole.com/starter/vlog v0.0.1 // indirect
+	github.com/starter-go/afs v0.9.4 // indirect
+	github.com/starter-go/base v0.9.11 // indirect
+	github.com/starter-go/configen v0.9.5 // indirect
+	github.com/starter-go/units v0.0.3 // indirect
+	github.com/starter-go/vlog v0.9.7 // indirect
 )

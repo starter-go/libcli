@@ -1,33 +1,34 @@
 package lib
 
 import (
-	"bitwormhole.com/starter/cli"
-	"github.com/bitwormhole/starter/application"
-	"github.com/bitwormhole/starter/markup"
+	"github.com/starter-go/application"
+	"github.com/starter-go/cli"
 )
 
 ////////////////////////////////////////////////////////////////////////////////
 
 // CliServiceImpl ...
 type CliServiceImpl struct {
-	markup.Component `class:"life"`
+	// markup.Component `class:"life"`
+	//starter:component
+	_as func(application.Lifecycle) //starter:as(".")
 
-	ContextHolder CliContextHolder `inject:"#cli.ContextHolder"`
-	Client        cli.Client       `inject:"#cli.Client"`
-	Server        cli.Server       `inject:"#cli.Server"`
+	ContextHolder CliContextHolder //starter:inject("#")
+	Client        cli.Client       //starter:inject("#")
+	Server        cli.Server       //starter:inject("#")
 
-	Handlers []cli.HandlerRegistry `inject:".cli.HandlerRegistry"`
-	Filters  []cli.FilterRegistry  `inject:".cli.FilterRegistry"`
+	Handlers []cli.HandlerRegistry //starter:inject(".")
+	Filters  []cli.FilterRegistry  //starter:inject(".")
 }
 
-func (inst *CliServiceImpl) _Impl() application.LifeRegistry {
+func (inst *CliServiceImpl) _Impl() application.Lifecycle {
 	return inst
 }
 
-// GetLifeRegistration ...
-func (inst *CliServiceImpl) GetLifeRegistration() *application.LifeRegistration {
-	return &application.LifeRegistration{
-		OnInit: inst.init,
+// Life ...
+func (inst *CliServiceImpl) Life() *application.Life {
+	return &application.Life{
+		OnCreate: inst.init,
 	}
 }
 
@@ -39,19 +40,24 @@ func (inst *CliServiceImpl) init() error {
 
 func (inst *CliServiceImpl) initContext(ctx *cli.Context) {
 
-	cb := cli.ContextBuilder{}
-	handlers := inst.Handlers
-	filters := inst.Filters
+	// cb := cli.DefaultContextFactory{}
+	// handlers := inst.Handlers
+	// filters := inst.Filters
 
-	cb.Init(ctx)
+	// cb.Init(ctx)
 
-	for _, h := range handlers {
-		cb.RegisterHandler(h)
-	}
+	// for _, h := range handlers {
+	// 	cb.RegisterHandler(h)
+	// }
 
-	for _, f := range filters {
-		cb.RegisterFilter(f)
-	}
+	// for _, f := range filters {
+	// 	cb.RegisterFilter(f)
+	// }
 
-	cb.Create()
+	// // cb.Create()
+	// cb.NewContext()
+
+	ctx.Client = inst.Client
+	ctx.Server = inst.Server
+
 }

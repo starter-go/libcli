@@ -3,23 +3,23 @@ package libcli
 import (
 	"embed"
 
-	"bitwormhole.com/starter/libcli/gen/cfg4libcli"
-	"github.com/bitwormhole/starter"
-	"github.com/bitwormhole/starter/application"
-	"github.com/bitwormhole/starter/collection"
+	"github.com/starter-go/application"
+	"github.com/starter-go/cli/modules/cli"
+	"github.com/starter-go/libcli/gen/gen4libcli"
+	"github.com/starter-go/libcli/gen/gen4libclitest"
 )
 
 const (
-	theModuleName     = "github.com/bitwormhole-starter/libgin"
-	theModuleVersion  = "v0.0.1"
-	theModuleRevision = 1
+	theModuleName     = "github.com/starter-go/libcli"
+	theModuleVersion  = "v0.0.2"
+	theModuleRevision = 2
 	theModuleResPath  = "src/main/resources"
 )
 
 //go:embed "src/main/resources"
 var theModuleResFS embed.FS
 
-// Module 导出模块【github.com/bitwormhole-starter/libgin】
+// Module 导出模块 [github.com/starter-go/libcli]
 func Module() application.Module {
 
 	mb := application.ModuleBuilder{}
@@ -27,10 +27,28 @@ func Module() application.Module {
 	mb.Version(theModuleVersion)
 	mb.Revision(theModuleRevision)
 
-	mb.OnMount(cfg4libcli.ExportConfig)
-	mb.Resources(collection.LoadEmbedResources(&theModuleResFS, theModuleResPath))
+	mb.Components(gen4libcli.ExportConfig)
+	mb.EmbedResources(theModuleResFS, theModuleResPath)
 
-	mb.Dependency(starter.Module())
+	mb.Depend(cli.Module())
+
+	return mb.Create()
+}
+
+// ModuleTest 导出模块 [github.com/starter-go/libcli#test]
+func ModuleTest() application.Module {
+
+	parent := Module()
+
+	mb := application.ModuleBuilder{}
+	mb.Name(theModuleName + "#test")
+	mb.Version(theModuleVersion)
+	mb.Revision(theModuleRevision)
+
+	mb.Components(gen4libclitest.ExportConfig)
+	mb.EmbedResources(theModuleResFS, theModuleResPath)
+
+	mb.Depend(parent)
 
 	return mb.Create()
 }

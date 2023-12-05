@@ -1,16 +1,17 @@
 package lib
 
 import (
-	"bitwormhole.com/starter/cli"
-	"bitwormhole.com/starter/cli/filters"
-	"github.com/bitwormhole/starter/markup"
+	"github.com/starter-go/cli"
+	"github.com/starter-go/cli/filters"
 )
 
 // CliFiltersConfig ...
 type CliFiltersConfig struct {
-	markup.Component `class:"cli.FilterRegistry"`
+	// markup.Component `class:"cli.FilterRegistry"`
+	//starter:component
+	_as func(cli.FilterRegistry) //starter:as(".")
 
-	ContextHolder CliContextHolder `inject:"#cli.ContextHolder"`
+	ContextHolder CliContextHolder //starter:inject("#")
 }
 
 func (inst *CliFiltersConfig) _Impl() cli.FilterRegistry {

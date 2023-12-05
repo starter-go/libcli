@@ -3,15 +3,16 @@ package lib
 import (
 	"context"
 
-	"bitwormhole.com/starter/cli"
-	"github.com/bitwormhole/starter/markup"
+	"github.com/starter-go/cli"
 )
 
 // CliClientFacade ...
 type CliClientFacade struct {
-	markup.Component `id:"cli.Client"`
+	// markup.Component `id:"cli.Client"`
+	//starter:component
+	_as func(cli.Client) //starter:as("#")
 
-	ContextHolder CliContextHolder `inject:"#cli.ContextHolder"`
+	ContextHolder CliContextHolder //starter:inject("#")
 }
 
 func (inst *CliClientFacade) _Impl() cli.Client {
